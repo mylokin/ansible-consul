@@ -1,0 +1,31 @@
+---
+
+- include: consul.yml
+
+- name: configure client
+  template: >
+    src=client.j2
+    dest=/etc/consul.d/20-agent.json
+  notify:
+    - restart consul
+  when: consul_client == true
+
+- name: add services
+  template: >
+    src=service.j2
+    dest=/etc/consul.d/{{item.fname}}.json
+  with_items: consul_services
+  notify:
+    - restart consul
+  when: consul_services != false
+
+- name: configure server
+  template: >
+    src=server.j2
+    dest=/etc/consul.d/20-agent.json
+  notify:
+    - clean consul data
+    - restart consul
+  when: consul_server == true
+
+- { include: dnsmasq.yml, when: consul_install_dnsmasq == true }

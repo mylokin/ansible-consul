@@ -1,0 +1,16 @@
+---
+
+- name: restart consul
+  service: >
+    name=consul
+    state=restarted
+
+- name: clean consul data
+  file: >
+    path=/var/lib/consul/*
+    state=absent
+
+- name: restart dnsmasq
+  service: >
+    name=dnsmasq
+    state=restarted

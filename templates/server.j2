@@ -1,0 +1,13 @@
+{
+    "bind_addr": "{{ ansible_default_ipv4.address }}",
+    "bootstrap_expect": {{ groups['consul'] | length }},
+    "data_dir": "/var/lib/consul",
+    "dns": {
+        "allow_stale": true,
+        "enable_truncate": true
+    },
+    "enable_syslog": false,
+    "node_name": "{{ inventory_hostname }}",
+    "server": true,
+    "retry_join": [{% for host in groups['consul'] %}"{{ hostvars[host].ansible_ssh_host }}"{% if not loop.last %}, {% endif %}{% endfor %}]
+}

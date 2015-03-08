@@ -1,0 +1,5 @@
+---
+consul_client: false
+consul_server: false
+consul_services: false
+consul_install_dnsmasq: false

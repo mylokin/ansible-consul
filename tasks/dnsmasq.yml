@@ -1,0 +1,36 @@
+---
+
+- name: install dnsmasq
+  apt: >
+    name=dnsmasq
+    state=present
+
+- name: enable dnsmasq configs
+  lineinfile: >
+    dest=/etc/dnsmasq.conf
+    state=present
+    line='conf-dir=/etc/dnsmasq.d'
+  register: resolv_content
+
+- name: ensure resolv is configured
+  copy: >
+    src=resolv.conf
+    dest=/etc/resolvconf/resolv.conf.d/base
+  register: resolv_content
+
+- name: ensure network is restarted
+  shell: ifdown -a && ifup -a
+  when: resolv_content.changed
+
+- name: configure dnsmasq
+  copy: >
+    src=10-consul
+    dest=/etc/dnsmasq.d/10-consul
+  notify:
+    - restart dnsmasq
+
+- name: ensure dnsmasq starts on fresh boot
+  service: >
+    name=dnsmasq
+    state=started
+    enabled=yes

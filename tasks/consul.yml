@@ -1,0 +1,12 @@
+---
+
+- name: add consul repository
+  apt_repository: >
+    repo='ppa:bcandrea/consul'
+    state=present
+
+- name: install consul
+  apt: >
+    name=consul
+    state=present
+    force=yes
