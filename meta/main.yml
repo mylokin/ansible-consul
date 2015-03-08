@@ -1,0 +1,17 @@
+---
+galaxy_info:
+  author: Andrey Gubarev
+  description:
+
+  license: MIT
+  min_ansible_version: 1.6
+
+  platforms:
+  - name: GenericLinux
+    versions:
+    - all
+    - any
+
+  categories:
+  - development
+  - web
