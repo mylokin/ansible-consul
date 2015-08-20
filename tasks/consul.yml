@@ -1,12 +1,7 @@
 ---
 
-- name: add consul repository
-  apt_repository: >
-    repo='ppa:bcandrea/consul'
-    state=present
-
 - name: install consul
-  apt: >
-    name=consul
-    state=present
-    force=yes
+  copy: src=consul dest=/usr/bin/consul mode=0755
+
+- name: copy upstart file
+  copy: src=consul.conf dest=/etc/init/consul.conf mode=0644
