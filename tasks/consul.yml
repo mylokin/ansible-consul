@@ -5,3 +5,6 @@
 
 - name: copy upstart file
   copy: src=consul.conf dest=/etc/init/consul.conf mode=0644
+
+- name: create /etc/consul.d
+  file: path=/etc/consul.d state=directory mode=0755
