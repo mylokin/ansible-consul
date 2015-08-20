@@ -5,6 +5,11 @@
     name=consul
     state=restarted
 
+- name: reload consul
+  service: >
+    name=consul
+    state=reloaded
+
 - name: clean consul data
   file: >
     path=/var/lib/consul/*
