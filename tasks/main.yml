@@ -16,7 +16,7 @@
     dest=/etc/consul.d/{{item.fname}}.json
   with_items: consul_services
   notify:
-    - reload consul
+    - restart consul
   when: consul_services != false
 
 - name: configure server
